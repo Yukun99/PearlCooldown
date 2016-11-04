@@ -1,0 +1,6 @@
+#Messages Version 1 by Yukun
+#Placeholders:
+#- %time% for the time left before next enderpearl throw.
+Messages:
+  Prefix: '&bDelay&ePearl&f >> &7' #Prefix before all the messages.
+  DelayMessage: 'Please wait %time% seconds before throwing the enderpearl!'
