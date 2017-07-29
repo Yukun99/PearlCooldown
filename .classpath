@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="C:/Users/Yukunxu123/Downloads/plugins/uploaded/spigot-1_8_R3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Yukunxu123/Downloads/plugins/uploaded/spigot-1_9_R1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Yukunxu123/Downloads/plugins/uploaded/spigot-1_9_R2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Yukunxu123/Downloads/plugins/uploaded/spigot-1_11_R1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

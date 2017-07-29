@@ -23,6 +23,14 @@ public class Api {
 		}
 	}
 	
+	public static ItemStack getItemInOffHand(Player player) {
+		if (getVersion() >= 191) {
+			return player.getInventory().getItemInOffHand();
+		} else {
+			return null;
+		}
+	}
+	
 	public static String getConfigString(String path) {
 		String msg = Main.settings.getConfig().getString(path);
 		return msg;

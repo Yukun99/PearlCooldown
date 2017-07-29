@@ -59,9 +59,10 @@ public class DelayPearlEvent implements Listener {
 		final Player player = e.getPlayer();
 		if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE) {
 			if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-				if (Api.getItemInHand(player) != null) {
-					ItemStack item = Api.getItemInHand(player);
-					if (item.getType() == Material.getMaterial("ENDER_PEARL")) {
+				if (Api.getVersion() >= 191) {
+					ItemStack item = player.getInventory().getItemInMainHand();
+					ItemStack off = player.getInventory().getItemInOffHand();
+					if (item.getType() == Material.ENDER_PEARL && off.getType() == Material.ENDER_PEARL) {
 						if (!player.hasPermission("PearlCooldown.Bypass") || !player.isOp()) {
 							if (Active.get(player) == true) {
 								e.setCancelled(true);
@@ -85,7 +86,47 @@ public class DelayPearlEvent implements Listener {
 													if (Timer.get(player) != null && Timer.get(player) == 0) {
 														Active.put(player, false);
 														Timer.remove(player);
-														Bukkit.getServer().getScheduler().cancelTask(Cooldown.get(player));
+														Bukkit.getServer().getScheduler()
+																.cancelTask(Cooldown.get(player));
+														Cooldown.remove(player);
+														return;
+													}
+												}
+											}
+										}, 20, 0));
+								return;
+							}
+						}
+					}
+				} else {
+					@SuppressWarnings("deprecation")
+					ItemStack item = player.getItemInHand();
+					if (item.getType() == Material.ENDER_PEARL) {
+						if (!player.hasPermission("PearlCooldown.Bypass") || !player.isOp()) {
+							if (Active.get(player) == true) {
+								e.setCancelled(true);
+								player.updateInventory();
+								player.sendMessage(
+										Api.color(prefix + delaymsg.replace("%time%", (Timer.get(player) + ""))));
+								return;
+							}
+							if (Active.get(player) == false) {
+								Active.put(player, true);
+								if (Api.isInt(Api.getConfigString("Options.Delay"))) {
+									Timer.put(player, Integer.parseInt(Api.getConfigString("Options.Delay")));
+								}
+								Cooldown.put(player, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
+										new Runnable() {
+											public void run() {
+												if (Active.get(player) != null && Active.get(player) == true) {
+													if (Timer.get(player) != null && Timer.get(player) >= 1) {
+														Timer.put(player, (Timer.get(player) - 1));
+													}
+													if (Timer.get(player) != null && Timer.get(player) == 0) {
+														Active.put(player, false);
+														Timer.remove(player);
+														Bukkit.getServer().getScheduler()
+																.cancelTask(Cooldown.get(player));
 														Cooldown.remove(player);
 														return;
 													}

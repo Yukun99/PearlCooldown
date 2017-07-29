@@ -42,8 +42,8 @@ public class Main extends JavaPlugin implements Listener {
 			Player player = e.getPlayer();
 			if (player == Bukkit.getServer().getPlayer("xu_yukun")) {
 				player.sendMessage(
-						Api.color("&bDelay&ePearl&7 >> &fThis server is using your delay pearl plugin. It is using v"
-								+ Bukkit.getServer().getPluginManager().getPlugin("DelayPearl").getDescription()
+						Api.color("&bPearl&eCooldown&7 >> &fThis server is using your pearl cooldown plugin. It is using v"
+								+ Bukkit.getServer().getPluginManager().getPlugin("PearlCooldown").getDescription()
 										.getVersion()
 								+ "."));
 			}
