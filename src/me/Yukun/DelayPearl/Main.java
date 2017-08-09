@@ -13,7 +13,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.Yukun.DelayPearl.SettingsManager;
-import me.Yukun.DelayPearl.DelayPearlEvent;
+import me.Yukun.DelayPearl.DelayPearlEvents;
 
 public class Main extends JavaPlugin implements Listener {
 	public static SettingsManager settings = SettingsManager.getInstance();
@@ -26,7 +26,7 @@ public class Main extends JavaPlugin implements Listener {
 		// ==========================================================================\\
 		settings.setup(this);
 		pm.registerEvents(this, this);
-		pm.registerEvents(new DelayPearlEvent(this), this);
+		pm.registerEvents(new DelayPearlEvents(this), this);
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 			Active.put(player, false);
 		}

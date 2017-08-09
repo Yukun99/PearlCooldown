@@ -13,19 +13,20 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import me.Yukun.DelayPearl.Api;
 import me.Yukun.DelayPearl.Main;
 
-public class DelayPearlEvent implements Listener {
+public class DelayPearlEvents implements Listener {
 	static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("RankQuests");
 	String prefix = Api.getMessagesString("Messages.Prefix");
 	String delaymsg = Api.getMessagesString("Messages.DelayMessage");
 
 	@SuppressWarnings("static-access")
-	public DelayPearlEvent(Plugin plugin) {
+	public DelayPearlEvents(Plugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,6 +53,20 @@ public class DelayPearlEvent implements Listener {
 		Player player = e.getPlayer();
 		Active.put(player, false);
 		return;
+	}
+
+	@EventHandler
+	public void pearlLandEvent(PlayerTeleportEvent e) {
+		if (e.getPlayer() != null && e.getPlayer() instanceof Player) {
+			Player player = e.getPlayer();
+			if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
+				if (player.hasPermission("PearlCooldown.NoDamage")) {
+					e.setCancelled(true);
+					player.setNoDamageTicks(1);
+					player.teleport(e.getTo());
+				}
+			}
+		}
 	}
 
 	@EventHandler
